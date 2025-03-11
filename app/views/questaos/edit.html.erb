@@ -1,0 +1,21 @@
+<% content_for :title, "Editar Questão" %>
+<%= stylesheet_link_tag "questoes", media: "all", "data-turbo-track": "reload" %>
+<% require 'json' %>
+
+<div class="container">
+      <h1>Editar Questão</h1>
+
+      <%= render "form", questao: @questao %>
+
+    <br>
+
+    <div>
+      <%= link_to "Visualizar", @questao %> |
+      <%= link_to "Voltar", questaos_path %>
+    </div>
+
+
+
+
+
+</div>

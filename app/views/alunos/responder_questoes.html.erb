@@ -1,0 +1,32 @@
+<%= stylesheet_link_tag "alunos", media: "all", "data-turbo-track": "reload" %>
+<h1 class="text-center mb-4">Responda as Perguntas</h1>
+
+<%= form_with url: salvar_respostas_aluno_path(@aluno), method: :post, local: true do |f| %>
+  <div class="container">
+    <% @questoes.each_with_index do |questao, index| %>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title"><strong><%= questao.enunciado %></strong></h5>
+
+          <% questao.alternativas.each do |alternativa| %>
+            <div class="form-check">
+              <!-- Corrigido o uso da interpolação dentro de HTML -->
+              <%= radio_button_tag "respostas[#{questao.id}]", alternativa, false, class: "form-check-input", id: "alternativa_#{questao.id}_#{alternativa}" %>
+              <%= label_tag "alternativa_#{questao.id}_#{alternativa}", alternativa, class: "form-check-label" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Se você quiser separar cada questão em páginas diferentes, adicione algum tipo de navegação, como um botão para avançar entre as questões -->
+      <% if index < @questoes.size - 1 %>
+        <hr class="my-4">
+      <% end %>
+    <% end %>
+
+    <!-- Centralizar o botão de envio -->
+    <div class="text-center">
+      <%= f.submit "Finalizar Teste", class: "btn btn-primary btn_principal" %>
+    </div>
+  </div>
+<% end %>

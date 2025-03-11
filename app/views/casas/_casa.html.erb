@@ -1,0 +1,38 @@
+<div class="containaer">
+
+    <%@alunosPorCasa = Aluno.all%>
+
+    <table id="questoes-table" class="table table-striped"
+       data-pagination="true"
+       data-page-size="10"
+       data-search="true"
+       data-show-columns="true"
+       data-pagination-parts='["pageSize", "pageList"]'
+       data-toggle="table"
+       data-search-placeholder="Pesquisar...">
+  <thead>
+    <tr>
+      <th data-field="enunciado" data-sortable="true">Aluno (a) </th>
+      <th data-field="status" data-sortable="false">Turma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @alunosPorCasa.each do |aluno| %>
+      <tr>
+        <%if aluno.casa_id == casa.id%>
+          <td><%= aluno.nome %></td>
+          <td><%= aluno.turma %></td>
+        <%end%>
+
+    </tr>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
+
+
+</div>

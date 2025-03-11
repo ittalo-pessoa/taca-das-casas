@@ -1,0 +1,61 @@
+@import "bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Bigelow+Rules&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=MedievalSharp&family=Nanum+Gothic+Coding&display=swap');
+
+
+/* Arquivo alunos.css ou o arquivo CSS correspondente */
+.logo-container {
+    text-align: center; /* Centraliza a imagem horizontalmente */
+    margin-bottom: 20px; /* Espaçamento abaixo da imagem */
+  }
+
+  .logo {
+    width: 50%; /* Ajusta a largura da imagem para 50% do tamanho original */
+    height: auto; /* Ajusta a altura proporcionalmente */
+  }
+
+  h1{
+    color: darkgreen;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 1000;
+    font-style: bolder;
+}
+
+h2{
+
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 1000;
+    font-style: bolder;
+
+}
+
+.animated {
+    animation: fadeIn 2s ease-in-out infinite;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* Efeito de sombra no texto */
+  .display-4 {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn_principal{
+    color: white;
+    background-color: darkgreen;
+}
+
+.casa-imagem {
+    width: 400px;
+    height: 400px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+
+
+
+

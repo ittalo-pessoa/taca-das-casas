@@ -1,0 +1,23 @@
+<%= stylesheet_link_tag "alunos", media: "all", "data-turbo-track": "reload" %>
+<div class="container">
+
+  <h2 class="text-center">Olá, <%= aluno.nome %> sua casa é...</h2>
+
+  <% case aluno.casa.nome.downcase %>
+    <% when 'css' %>
+      <%= image_tag "css.png", alt: "Casa CSS", class: "img-fluid casa-imagem" %>
+    <% when 'html' %>
+      <%= image_tag "html.png", alt: "Casa HTML", class: "img-fluid casa-imagem" %>
+    <% when 'javascript' %>
+      <%= image_tag "js.png", alt: "Casa JavaScript", class: "img-fluid casa-imagem" %>
+    <% else %>
+      <p>Casa desconhecida</p>
+  <% end %>
+
+
+<div class="text-center">
+  <a href="<%=new_aluno_path%>"> <button class="btn btn-primary btn_principal"> Voltar </button></a>
+</div>
+
+
+</div>

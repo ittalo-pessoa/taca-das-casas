@@ -1,0 +1,31 @@
+@import "bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Bigelow+Rules&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=MedievalSharp&family=Nanum+Gothic+Coding&display=swap');
+
+
+
+body{
+    padding: 15px;
+}
+
+h1{
+  color: darkgreen;
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+
+}
+
+.btn_principal{
+    color: white;
+    background-color: darkgreen;
+}
+
+.casa-imagem {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+
+

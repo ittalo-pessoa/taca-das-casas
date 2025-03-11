@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @casa %>
+
+<div>
+  <%= link_to "Edit this casa", edit_casa_path(@casa) %> |
+  <%= link_to "Back to casas", casas_path %>
+
+  <%= button_to "Destroy this casa", @casa, method: :delete %>
+</div>
