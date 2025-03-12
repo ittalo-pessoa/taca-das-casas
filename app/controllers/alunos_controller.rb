@@ -36,56 +36,50 @@ class AlunosController < ApplicationController
     params[:respostas].each do |questao_id, alternativa_escolhida|
       questao = Questao.find(questao_id)
 
+      # Cria a resposta para o aluno e a questão
       Respostum.create!(aluno: @aluno, questao: questao, alternativa_escolhida: alternativa_escolhida)
 
-      alternativa = questao.alternativas.find { |alt| alt.downcase == alternativa_escolhida.downcase }
+      # Obtém as alternativas e as categorias associadas
+      alternativas = questao.alternativas.map(&:downcase)
+      categorias = questao.categorias
 
-      puts "Alternativa escolhida: #{alternativa_escolhida}"
-      puts "Alternativa encontrada: #{alternativa}"
+      # Encontra o índice da alternativa escolhida
+      index = alternativas.index(alternativa_escolhida.downcase)
 
-      if alternativa
-        categoria_para_casa = {
-          "js" => "JavaScript",
-          "html" => "HTML",
-          "css" => "CSS"
-        }
+      if index && index < categorias.size
+        # Obtém a categoria correspondente à alternativa
+        categoria = categorias[index]
 
-        casa_nome = categoria_para_casa[alternativa.downcase]
-        if casa_nome
-          casa = Casa.find_by(nome: casa_nome)
-          if casa
-            pontuacao_por_casa[casa] += questao.pontuacao
-            puts "Adicionando #{questao.pontuacao} pontos para a casa #{casa.nome}"
-          else
-            puts "Casa não encontrada para a alternativa: #{alternativa}"
-          end
+        # Verifica se a categoria é "JS" e substitui por "JavaScript"
+        categoria = "JavaScript" if categoria.casecmp("JS").zero?
+
+        # Busca a casa com o nome correto
+        casa = Casa.find_by(nome: categoria)
+
+        if casa
+          pontuacao_por_casa[casa] += questao.pontuacao
+          Rails.logger.info "Adicionando #{questao.pontuacao} pontos para a casa #{casa.nome}"
         else
-          puts "Categoria não mapeada para a alternativa: #{alternativa}"
+          Rails.logger.warn "Casa não encontrada para a categoria: #{categoria}"
         end
       else
-        puts "Alternativa não encontrada: #{alternativa_escolhida}"
+        Rails.logger.warn "Alternativa não encontrada ou sem categoria: #{alternativa_escolhida}"
       end
     end
 
-    puts "Pontuações por casa: #{pontuacao_por_casa.inspect}"
+    Rails.logger.info "Pontuações por casa: #{pontuacao_por_casa.inspect}"
 
-    casas_empatadas = pontuacao_por_casa.select { |_casa, pontos| pontos == pontuacao_por_casa.values.max }
+    # Seleção da casa com maior pontuação (ou desempate por menor número de alunos)
+    casa_escolhida = pontuacao_por_casa.max_by { |casa, pontos| [pontos, -casa.alunos.count] }&.first
 
-    if casas_empatadas.size > 1
-      casas_empatadas = casas_empatadas.min_by { |casa, _| casa.alunos.count }.first
-      puts "Casa com menos membros: #{casas_empatadas.nome}"
+    if casa_escolhida
+      @aluno.update(casa: casa_escolhida)
+      Rails.logger.info "Casa escolhida: #{casa_escolhida.nome}"
     else
-      casas_empatadas = casas_empatadas.keys.first
+      Rails.logger.warn "Nenhuma casa escolhida"
     end
 
-    if casas_empatadas
-      @aluno.update(casa: casas_empatadas)
-      puts "Casa escolhida: #{casas_empatadas.nome}"
-    else
-      puts "Nenhuma casa escolhida"
-    end
-
-    redirect_to @aluno, notice: "Aluno criado com sucesso e atribuído à casa #{casas_empatadas&.nome || 'nenhuma'}!"
+    redirect_to @aluno, notice: "Aluno criado com sucesso e atribuído à casa #{casa_escolhida&.nome || 'nenhuma'}!"
   end
 
 

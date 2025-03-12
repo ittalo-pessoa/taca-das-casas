@@ -1,0 +1,35 @@
+<%= stylesheet_link_tag "casas", media: "all", "data-turbo-track": "reload" %>
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Atribuição de Pontos às Casas</h1>
+
+  <% if notice %>
+    <div class="alert alert-success" role="alert">
+      <%= notice %>
+    </div>
+  <% elsif alert %>
+    <div class="alert alert-danger" role="alert">
+      <%= alert %>
+    </div>
+  <% end %>
+
+  <%= form_with url: adicionar_pontos_casas_path, method: :post, class: "card p-4 shadow" do %>
+    <div class="mb-3">
+      <label for="casa_id" class="form-label">Selecione a Casa:</label>
+      <%= select_tag :casa_id, options_from_collection_for_select(@casas, :id, :nome), prompt: "Escolha uma casa", class: "form-select" %>
+    </div>
+
+    <div class="mb-3">
+      <label for="pontos" class="form-label">Quantidade de Pontos (use valores negativos para subtrair):</label>
+      <%= number_field_tag :pontos, nil, class: "form-control" %>
+    </div>
+
+    <div class="d-grid">
+      <%= submit_tag "Adicionar/Remover Pontos", class: "btn btn-success btn-sm w-25 mx-auto" %>
+    </div>
+  <% end %>
+
+  <div class="text-center mt-4">
+    <%= link_to "Acompanhar Placar", casas_path, class: "btn btn-primary", target: "_blank" %>
+  </div>
+</div>

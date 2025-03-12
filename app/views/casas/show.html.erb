@@ -1,10 +1,10 @@
-<p style="color: green"><%= notice %></p>
+<%= stylesheet_link_tag "casas", media: "all", "data-turbo-track": "reload" %>
 
 <%= render @casa %>
 
 <div>
-  <%= link_to "Edit this casa", edit_casa_path(@casa) %> |
-  <%= link_to "Back to casas", casas_path %>
+  <%#= link_to "Edit this casa", edit_casa_path(@casa) %>
+  <%= link_to "Voltar", casas_path %>
 
-  <%= button_to "Destroy this casa", @casa, method: :delete %>
+  <%#= button_to "Destroy this casa", @casa, method: :delete %>
 </div>
